@@ -25,3 +25,4 @@ A visual how-to for new OnionPress users, with real screenshots marked up with c
 
 - 2026-09-23: Plan agreed. Screenshots taken for chapters 1–6; review draft published as a private web page (https://claude.ai/artifact/WU7wHKTtCxcbr1NsYqLD2A). Source in getting-started-guide/. Next: user review, then the OnionHome HTML version. Chapter 0 still a placeholder.
 - 2026-09-23: OnionHome version written: getting-started-guide/help-getting-started.html, with annotated images in getting-started-guide/onionhome-images/ (circles and arrows are part of the PNGs). Needs the images uploaded to OnionHome and the page pasted in. Chapter 0 still a placeholder.
+- 2026-09-23: Pushed to GitHub (Arikia/OP-CTRL-X-Docs, public) for the team to review. NEXT (planned for 2026-09-24): chapter 0, first launch and onboarding (installing OnionPress, first-run setup and password, installing Brave/Tor Browser, Tor basics). Needs screenshots of a fresh setup.
