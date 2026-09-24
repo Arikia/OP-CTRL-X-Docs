@@ -1,0 +1,441 @@
+<title>OnionPress First Steps</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --paper: #faf8fd;
+    --surface: #ffffff;
+    --ink: #231a33;
+    --muted: #625a73;
+    --line: #e3dcee;
+    --accent: #6d3fb0;
+    --accent-soft: #efe7fa;
+    --mark: #ff4f2e;
+    --note-bg: #fff4e8;
+    --note-line: #f3c38f;
+    --shot-bg: #ece7f3;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --paper: #15111c;
+      --surface: #1e1928;
+      --ink: #ece6f5;
+      --muted: #aaa0bb;
+      --line: #342c42;
+      --accent: #b996ee;
+      --accent-soft: #2a2139;
+      --mark: #ff6a4d;
+      --note-bg: #2b2019;
+      --note-line: #6b4a2c;
+      --shot-bg: #241e2f;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --paper: #15111c;
+    --surface: #1e1928;
+    --ink: #ece6f5;
+    --muted: #aaa0bb;
+    --line: #342c42;
+    --accent: #b996ee;
+    --accent-soft: #2a2139;
+    --mark: #ff6a4d;
+    --note-bg: #2b2019;
+    --note-line: #6b4a2c;
+    --shot-bg: #241e2f;
+  }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font: 17px/1.6 "Source Sans 3", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    padding-inline: 20px;
+    padding-block: 0 64px;
+  }
+  .wrap { max-width: 780px; margin: 0 auto; }
+
+  header.top { padding-block: 56px 28px; border-bottom: 1px solid var(--line); }
+  .eyebrow {
+    font: 500 12px/1 "JetBrains Mono", ui-monospace, monospace;
+    letter-spacing: .08em; text-transform: uppercase; color: var(--accent);
+  }
+  h1, h2, h3 {
+    font-family: "Bricolage Grotesque", "Source Sans 3", sans-serif;
+    text-wrap: balance; line-height: 1.15; margin: 0;
+  }
+  h1 { font-size: clamp(34px, 6vw, 50px); font-weight: 800; letter-spacing: -.02em; margin-top: 14px; }
+  .lede { font-size: 19px; color: var(--muted); max-width: 62ch; margin: 14px 0 0; }
+
+  nav.toc { margin-top: 24px; }
+  nav.toc ol {
+    list-style: none; margin: 0; padding: 0;
+    display: flex; flex-wrap: wrap; gap: 8px;
+  }
+  nav.toc a {
+    display: inline-flex; gap: 8px; align-items: baseline;
+    padding: 6px 12px; border-radius: 999px;
+    background: var(--accent-soft); color: var(--ink);
+    text-decoration: none; font-size: 15px;
+  }
+  nav.toc a span { font: 500 12px "JetBrains Mono", monospace; color: var(--accent); }
+  nav.toc a:hover, nav.toc a:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+  section.chapter {
+    display: grid; grid-template-columns: 64px 1fr; gap: 0 20px;
+    padding-block: 48px 8px;
+  }
+  .num {
+    font: 800 44px/1 "Bricolage Grotesque", sans-serif;
+    color: var(--accent); opacity: .9;
+    font-variant-numeric: tabular-nums;
+  }
+  .chapter-body { min-width: 0; display: grid; gap: 18px; }
+  h2 { font-size: clamp(25px, 4vw, 31px); font-weight: 800; letter-spacing: -.01em; }
+  p { margin: 0; max-width: 65ch; }
+  code, .path {
+    font: 500 .86em "JetBrains Mono", ui-monospace, monospace;
+    background: var(--accent-soft); padding: 1px 6px; border-radius: 4px;
+    overflow-wrap: anywhere;
+  }
+  .ui { font-weight: 700; }
+
+  figure { margin: 0; display: grid; gap: 10px; }
+  .shot {
+    background: var(--shot-bg);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .shot.bare { background: transparent; border: 0; border-radius: 0; }
+  .shot.narrow { max-width: 460px; }
+  .shot svg { display: block; width: 100%; height: auto; }
+  figcaption { font-size: 14px; color: var(--muted); }
+
+  ol.steps { margin: 0; padding: 0; list-style: none; display: grid; gap: 12px; counter-reset: step; }
+  ol.steps li { display: grid; grid-template-columns: 30px 1fr; gap: 12px; align-items: start; }
+  ol.steps li::before {
+    counter-increment: step; content: counter(step);
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--mark); color: #fff;
+    font: 700 15px/28px "Source Sans 3", sans-serif; text-align: center;
+  }
+
+  .note {
+    background: var(--note-bg); border: 1px solid var(--note-line);
+    border-radius: 10px; padding: 14px 18px;
+    display: grid; gap: 6px;
+  }
+  .note strong { font-family: "Bricolage Grotesque", sans-serif; font-weight: 600; }
+
+  .placeholder {
+    border: 2px dashed var(--line); border-radius: 12px;
+    padding: 22px; display: grid; gap: 10px; color: var(--muted);
+  }
+  .placeholder ul { margin: 0; padding-left: 20px; }
+
+  footer { margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+
+  /* annotation layer */
+  .mk-ring { fill: none; stroke: var(--mark); stroke-width: 6; }
+  .mk-ring.thin { stroke-width: 4; stroke-dasharray: 10 8; }
+  .mk-line { fill: none; stroke: var(--mark); stroke-width: 5; stroke-linecap: round; }
+  .mk-badge circle { fill: var(--mark); }
+  .mk-badge text { fill: #fff; font: 700 26px "Source Sans 3", sans-serif; text-anchor: middle; dominant-baseline: central; }
+  .mk-label {
+    fill: var(--mark); font: 700 30px "Source Sans 3", sans-serif;
+    paint-order: stroke; stroke: #fff; stroke-width: 8px; stroke-linejoin: round;
+  }
+  .mk-arrowhead { fill: var(--mark); }
+
+  @media (max-width: 560px) {
+    section.chapter { grid-template-columns: 1fr; gap: 8px; }
+    .num { font-size: 34px; }
+    header.top { padding-block: 36px 22px; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+  html { scroll-behavior: smooth; }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="eyebrow">OnionPress · Getting started on a Mac</div>
+    <h1>Your first steps with OnionPress</h1>
+    <p class="lede">OnionPress runs your website from your own Mac and publishes it as an onion service on Tor. This guide shows where to click to open your dashboard, write a post, see your site, and keep a backup.</p>
+    <nav class="toc" aria-label="Chapters">
+      <ol>
+        <li><a href="#setup"><span>0</span>First launch</a></li>
+        <li><a href="#icon"><span>1</span>Find the icon</a></li>
+        <li><a href="#menu"><span>2</span>The menu</a></li>
+        <li><a href="#dashboard"><span>3</span>Your dashboard</a></li>
+        <li><a href="#post"><span>4</span>First post</a></li>
+        <li><a href="#visit"><span>5</span>Visit your site</a></li>
+        <li><a href="#backup"><span>6</span>Back up</a></li>
+      </ol>
+    </nav>
+  </header>
+
+  <!-- 0 -->
+  <section class="chapter" id="setup">
+    <div class="num">0</div>
+    <div class="chapter-body">
+      <h2>First launch and setup</h2>
+      <div class="placeholder">
+        <p><strong>Coming soon.</strong> This chapter will walk through installing OnionPress and the first-time setup, with screenshots. It will cover:</p>
+        <ul>
+          <li>Installing OnionPress and opening it for the first time</li>
+          <li>Choosing your username and password during setup, and saving them in a password manager</li>
+          <li>Installing Brave (or Tor Browser) so you can visit onion sites</li>
+          <li>What Tor is, and why the first connection can take a minute</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 1 -->
+  <section class="chapter" id="icon">
+    <div class="num">1</div>
+    <div class="chapter-body">
+      <h2>Find the OnionPress icon</h2>
+      <p>Once OnionPress is running, a small purple onion sits in the menu bar at the top right of your screen, near the clock. Everything else in this guide starts from that icon.</p>
+      <figure>
+        <div class="shot bare">
+          <svg viewBox="0 0 1500 200" role="img" aria-label="The Mac menu bar, with the purple OnionPress onion icon circled">
+            <defs><marker id="ah1" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path class="mk-arrowhead" d="M0 0L10 5L0 10z"/></marker></defs>
+            <image href="img/ch1-menubar.png" width="1500" height="76"/>
+            <ellipse class="mk-ring" cx="555" cy="34" rx="56" ry="36"/>
+            <path class="mk-line" d="M 740 170 Q 640 160 590 84" marker-end="url(#ah1)"/>
+            <text class="mk-label" x="752" y="180">The OnionPress onion</text>
+          </svg>
+        </div>
+        <figcaption>The OnionPress icon in the Mac menu bar.</figcaption>
+      </figure>
+      <div class="note">
+        <strong>Can't see it?</strong>
+        <p>If you have more than one screen, look at the menu bar on the screen you're using. On MacBooks with a notch, a crowded menu bar can hide icons behind the notch, so quit an app or two you don't need. If the onion isn't there at all, open OnionPress from your Applications folder.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="chapter" id="menu">
+    <div class="num">2</div>
+    <div class="chapter-body">
+      <h2>The OnionPress menu</h2>
+      <p>Click the onion to open the menu. You'll only need a few of its items day to day.</p>
+      <figure>
+        <div class="shot narrow">
+          <svg viewBox="0 0 1000 1010" role="img" aria-label="The OnionPress menu with its main items marked">
+            <image href="img/ch2-menu.png" width="1000" height="1010"/>
+            <ellipse class="mk-ring" cx="335" cy="31" rx="50" ry="30"/>
+            <rect class="mk-ring thin" x="312" y="74" width="520" height="46" rx="10"/>
+            <rect class="mk-ring" x="312" y="238" width="610" height="50" rx="10"/>
+            <rect class="mk-ring thin" x="312" y="144" width="380" height="46" rx="10"/>
+            <rect class="mk-ring thin" x="312" y="192" width="400" height="46" rx="10"/>
+            <rect class="mk-ring thin" x="312" y="642" width="250" height="46" rx="10"/>
+            <g class="mk-badge"><circle cx="880" cy="97" r="24"/><text x="880" y="97">1</text></g>
+            <g class="mk-badge"><circle cx="958" cy="263" r="24"/><text x="958" y="263">2</text></g>
+            <g class="mk-badge"><circle cx="725" cy="167" r="24"/><text x="725" y="167">3</text></g>
+            <g class="mk-badge"><circle cx="745" cy="215" r="24"/><text x="745" y="215">4</text></g>
+            <g class="mk-badge"><circle cx="595" cy="665" r="24"/><text x="595" y="665">5</text></g>
+          </svg>
+        </div>
+      </figure>
+      <ol class="steps">
+        <li><p><span class="ui">Status line.</span> Shows your site's name and onion address, like <code>orbit@op2auss3….onion</code>. While OnionPress is starting up it says <span class="ui">Starting...</span> instead.</p></li>
+        <li><p><span class="ui">Open Local Site</span> is the one to remember. It opens your site with you already signed in, so you can get to your dashboard (chapter 3).</p></li>
+        <li><p><span class="ui">Copy Onion Address</span> copies your site's address so you can share it.</p></li>
+        <li><p><span class="ui">Open in Brave Browser</span> opens your site over Tor, the way visitors see it (chapter 5). If you use Tor Browser, this item says <span class="ui">Open in Tor Browser</span>.</p></li>
+        <li><p><span class="ui">Backup...</span> saves a copy of your whole site (chapter 6).</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section class="chapter" id="dashboard">
+    <div class="num">3</div>
+    <div class="chapter-body">
+      <h2>Get into your dashboard</h2>
+      <p>Your site runs on WordPress, and the dashboard is where you write and manage it. To get there, click the onion and choose <span class="ui">Open Local Site</span>. Your browser opens your site, already signed in.</p>
+      <figure>
+        <div class="shot">
+          <svg viewBox="0 -90 1600 917" role="img" aria-label="The WordPress dashboard with Posts, New and the site name marked">
+            <rect x="0" y="-90" width="1600" height="90" fill="var(--shot-bg)"/>
+            <image href="img/ch3-dashboard.png" y="0" width="1600" height="827"/>
+            <rect class="mk-ring" x="4" y="266" width="182" height="36" rx="8"/>
+            <g class="mk-badge"><circle cx="150" cy="284" r="22"/><text x="150" y="284">1</text></g>
+            <ellipse class="mk-ring" cx="518" cy="108" rx="58" ry="24"/>
+            <path class="mk-line" d="M 518 -22 L 518 82"/>
+            <g class="mk-badge"><circle cx="518" cy="-46" r="24"/><text x="518" y="-46">2</text></g>
+            <ellipse class="mk-ring" cx="236" cy="108" rx="104" ry="24"/>
+            <path class="mk-line" d="M 236 -22 L 236 82"/>
+            <g class="mk-badge"><circle cx="236" cy="-46" r="24"/><text x="236" y="-46">3</text></g>
+          </svg>
+        </div>
+        <figcaption>The dashboard for the site “Orbit's Universe”.</figcaption>
+      </figure>
+      <ol class="steps">
+        <li><p><span class="ui">Posts</span> lists everything you've written.</p></li>
+        <li><p><span class="ui">+ New</span> starts a new post.</p></li>
+        <li><p>Your <span class="ui">site name</span> (here, <span class="ui">Orbit's Universe</span>) takes you to your site as visitors see it.</p></li>
+      </ol>
+
+      <h3 style="font-size:21px;font-weight:600;margin-top:12px">Seeing a login page instead?</h3>
+      <p>If your browser shows a WordPress login page asking for a username and password, don't try to guess them. Go back to the onion and choose <span class="ui">Open Local Site</span> again.</p>
+      <figure>
+        <div class="shot">
+          <svg viewBox="0 0 1600 827" role="img" aria-label="The WordPress login page, marked as the page you don't need">
+            <defs><marker id="ah3" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path class="mk-arrowhead" d="M0 0L10 5L0 10z"/></marker></defs>
+            <image href="img/ch3-login.png" width="1600" height="827"/>
+            <rect class="mk-ring thin" x="612" y="280" width="376" height="302" rx="12"/>
+            <path class="mk-line" d="M 1080 260 Q 1030 280 1000 320" marker-end="url(#ah3)"/>
+            <text class="mk-label" x="1040" y="210">No password needed.</text>
+            <text class="mk-label" x="1040" y="250">Use Open Local Site.</text>
+          </svg>
+        </div>
+        <figcaption>The WordPress login page. You can skip it.</figcaption>
+      </figure>
+      <div class="note">
+        <strong>Why there's no password to type</strong>
+        <p><span class="ui">Open Local Site</span> signs you in with a one-time link. Each link works once and expires after 2 minutes, so bookmarking it won't work. Once you're signed in, your browser usually stays signed in. You can still get signed out, for example after a restart, after clearing your browser data, or in a different browser. Whenever that happens, click <span class="ui">Open Local Site</span> again.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section class="chapter" id="post">
+    <div class="num">4</div>
+    <div class="chapter-body">
+      <h2>Write and publish your first post</h2>
+      <p>In the dashboard, click <span class="ui">+ New</span> at the top. The editor opens.</p>
+      <figure>
+        <div class="shot">
+          <svg viewBox="0 0 1600 827" role="img" aria-label="The WordPress editor with the title, the writing area and the Publish button marked">
+            <defs><marker id="ah4" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path class="mk-arrowhead" d="M0 0L10 5L0 10z"/></marker></defs>
+            <image href="img/ch4-editor.png" width="1600" height="827"/>
+            <rect class="mk-ring" x="164" y="232" width="166" height="56" rx="10"/>
+            <g class="mk-badge"><circle cx="366" cy="260" r="24"/><text x="366" y="260">1</text></g>
+            <rect class="mk-ring" x="164" y="332" width="206" height="44" rx="10"/>
+            <g class="mk-badge"><circle cx="406" cy="354" r="24"/><text x="406" y="354">2</text></g>
+            <rect class="mk-ring" x="1455" y="102" width="94" height="46" rx="10"/>
+            <path class="mk-line" d="M 1502 214 L 1502 160" marker-end="url(#ah4)"/>
+            <g class="mk-badge"><circle cx="1502" cy="240" r="24"/><text x="1502" y="240">3</text></g>
+          </svg>
+        </div>
+        <figcaption>A new, empty post in the WordPress editor.</figcaption>
+      </figure>
+      <ol class="steps">
+        <li><p>Click <span class="ui">Add title</span> and type a title.</p></li>
+        <li><p>Click below the title and start writing. Press Return for a new paragraph. To add a picture or other content, type <code>/</code> and choose from the list.</p></li>
+        <li><p>Click <span class="ui">Publish</span>, then click <span class="ui">Publish</span> again to confirm. Your post is now live.</p></li>
+      </ol>
+      <p>To check how it looks, click your site name at the top left of the dashboard. Your newest post appears at the top of your home page.</p>
+      <figure>
+        <div class="shot">
+          <svg viewBox="0 0 1600 827" role="img" aria-label="The site's home page, with the onion address and the signed-in greeting marked">
+            <image href="img/ch4-site.png" width="1600" height="827"/>
+            <rect class="mk-ring" x="414" y="266" width="606" height="32" rx="8"/>
+            <g class="mk-badge"><circle cx="1052" cy="282" r="24"/><text x="1052" y="282">1</text></g>
+            <ellipse class="mk-ring" cx="1488" cy="108" rx="92" ry="22"/>
+            <g class="mk-badge"><circle cx="1488" cy="166" r="24"/><text x="1488" y="166">2</text></g>
+          </svg>
+        </div>
+        <figcaption>Your site's home page, with the dashboard bar at the top because you're signed in.</figcaption>
+      </figure>
+      <ol class="steps">
+        <li><p>Your <span class="ui">name and onion address</span>. This is the address people use to reach your site.</p></li>
+        <li><p><span class="ui">Howdy, orbit</span> means you're signed in. Visitors don't see this dark bar.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="chapter" id="visit">
+    <div class="num">5</div>
+    <div class="chapter-body">
+      <h2>See your site the way visitors do</h2>
+      <p>Open Local Site shows your site straight from your Mac. To see it over Tor, the way visitors reach it, click the onion and choose <span class="ui">Open in Brave Browser</span> (or <span class="ui">Open in Tor Browser</span>).</p>
+      <p>The first time, the page stays blank for a while. Tor is building a private route to your site through several computers around the world. 20 to 30 seconds is normal, and sometimes it takes longer.</p>
+      <figure>
+        <div class="shot">
+          <svg viewBox="0 0 1600 982" role="img" aria-label="A Brave Tor window still loading the site, with the loading indicator marked">
+            <image href="img/ch5-tor-loading.png" width="1600" height="982"/>
+            <ellipse class="mk-ring" cx="106" cy="77" rx="34" ry="30"/>
+            <path class="mk-line" d="M 180 176 Q 130 150 116 112"/>
+            <rect x="160" y="170" width="640" height="56" rx="28" fill="var(--mark)"/>
+            <text x="480" y="199" fill="#fff" text-anchor="middle" dominant-baseline="central" style="font:700 28px 'Source Sans 3',sans-serif">Still connecting. Give it about 30 seconds.</text>
+          </svg>
+        </div>
+        <figcaption>Still loading after 20 seconds. The ✕ next to the address means the page is loading.</figcaption>
+      </figure>
+      <figure>
+        <div class="shot">
+          <svg viewBox="0 0 1600 982" role="img" aria-label="The site loaded over Tor, with the onion address and the Tor indicator marked">
+            <image href="img/ch5-tor-site.png" width="1600" height="982"/>
+            <rect class="mk-ring" x="334" y="58" width="726" height="40" rx="10"/>
+            <g class="mk-badge"><circle cx="1110" cy="78" r="24"/><text x="1110" y="78">1</text></g>
+            <ellipse class="mk-ring" cx="1510" cy="78" rx="58" ry="26"/>
+            <g class="mk-badge"><circle cx="1510" cy="160" r="24"/><text x="1510" y="160">2</text></g>
+          </svg>
+        </div>
+        <figcaption>The same site, loaded over Tor after about 30 seconds.</figcaption>
+      </figure>
+      <ol class="steps">
+        <li><p>The <span class="ui">.onion address</span> in the address bar. Anyone with Tor can visit it.</p></li>
+        <li><p>The <span class="ui">Tor</span> label means this window connects through Tor.</p></li>
+      </ol>
+      <div class="note">
+        <strong>Sharing your site</strong>
+        <p>Choose <span class="ui">Copy Onion Address</span> from the onion menu and paste it anywhere. Visitors need Tor Browser, or a Brave <span class="ui">Private Window with Tor</span>, to open .onion addresses.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section class="chapter" id="backup">
+    <div class="num">6</div>
+    <div class="chapter-body">
+      <h2>Keep a backup</h2>
+      <p>A backup saves your whole site in one file: posts, pictures, settings, and the keys to your onion address. With it, you can restore your site on another Mac, at the same address. Make one after anything you'd hate to lose.</p>
+      <p>Click the onion and choose <span class="ui">Backup...</span>.</p>
+      <figure>
+        <div class="shot narrow">
+          <svg viewBox="0 0 720 760" role="img" aria-label="The Backup OnionPress window with the username, password and Backup button marked">
+            <image href="img/ch6-backup-dialog.png" width="720" height="760"/>
+            <rect class="mk-ring thin" x="226" y="468" width="428" height="50" rx="10"/>
+            <g class="mk-badge"><circle cx="688" cy="493" r="22"/><text x="688" y="493">1</text></g>
+            <rect class="mk-ring" x="222" y="524" width="438" height="60" rx="12"/>
+            <g class="mk-badge"><circle cx="688" cy="554" r="22"/><text x="688" y="554">2</text></g>
+            <rect class="mk-ring" x="364" y="632" width="228" height="68" rx="16"/>
+            <g class="mk-badge"><circle cx="630" cy="666" r="22"/><text x="630" y="666">3</text></g>
+          </svg>
+        </div>
+      </figure>
+      <ol class="steps">
+        <li><p><span class="ui">Username</span> is filled in for you.</p></li>
+        <li><p>Type your <span class="ui">password</span>. This is the one you chose during setup. It also locks the backup file, and you'll need it to restore.</p></li>
+        <li><p>Click <span class="ui">Backup</span>, choose where to save, and click <span class="ui">Save</span>. When it's done, OnionPress tells you the file name and size.</p></li>
+      </ol>
+      <div class="note">
+        <strong>Forgot your password?</strong>
+        <p>Open your dashboard with <span class="ui">Open Local Site</span> (no password needed), then go to <span class="ui">Users → Profile</span> and click <span class="ui">Set New Password</span>. Save the new one in a password manager. Backups you made earlier still need the old password.</p>
+      </div>
+      <p>Backups go in the <span class="path">OnionPress/backups</span> folder in your home folder, unless you choose somewhere else.</p>
+      <figure>
+        <div class="shot">
+          <svg viewBox="0 0 1400 604" role="img" aria-label="The backups folder in Finder, showing one backup file">
+            <image href="img/ch6-finder.png" width="1400" height="604"/>
+            <rect class="mk-ring" x="300" y="108" width="1085" height="50" rx="10"/>
+          </svg>
+        </div>
+        <figcaption>A finished backup: one ZIP file, named after your site and the date.</figcaption>
+      </figure>
+      <p>For extra safety, copy the backup somewhere other than your Mac, like an external drive.</p>
+    </div>
+  </section>
+
+  <footer>
+    Screenshots from OnionPress 2.4.110 on macOS, taken September 23, 2026.
+  </footer>
+</div>

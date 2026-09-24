@@ -1,0 +1,216 @@
+<!--
+    OnionHome help page: "Your first steps with OnionPress"
+    Slug: /help-getting-started/
+    Paste into a new WordPress page on OnionHome (op2home…onion and
+    onionpress.org) using the code editor / raw HTML block.
+
+    Images: upload the 10 files in onionhome-images/ through
+    Media → Add New before publishing. WordPress files them under
+    /wp-content/uploads/<year>/<month>/. The paths below assume a
+    September 2026 upload (2026/09); if you upload in a different month,
+    find-and-replace "/uploads/2026/09/" with the folder WordPress used.
+
+    The circles, arrows and numbered markers are drawn into the PNGs
+    themselves, so the page needs no SVG or JavaScript and works in
+    Tor Browser's Safest mode.
+
+    Chapter 0 (first launch, installing Brave, Tor basics) is a
+    placeholder until it gets its own screenshots.
+-->
+<!-- wp:html -->
+<style>
+.op-gs { max-width: 760px; margin: 0 auto; padding: 1.5em 1em; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.6; color: #231a33; }
+.op-gs h1 { font-size: 2em; line-height: 1.2; margin: 0 0 .4em; }
+.op-gs h2 { font-size: 1.45em; line-height: 1.25; margin: 2.2em 0 .6em; padding-top: 1.2em; border-top: 1px solid #e3dcee; }
+.op-gs h2 .op-gs-num { color: #6d3fb0; margin-right: .35em; }
+.op-gs h3 { font-size: 1.15em; margin: 1.6em 0 .5em; }
+.op-gs .op-gs-lede { font-size: 1.1em; color: #625a73; }
+.op-gs .op-gs-toc { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; padding: 0; margin: 1.2em 0 0; }
+.op-gs .op-gs-toc a { display: inline-block; padding: 4px 12px; border-radius: 999px; background: #efe7fa; color: #231a33; text-decoration: none; font-size: .92em; }
+.op-gs figure { margin: 1.2em 0; }
+.op-gs figure img { display: block; width: 100%; height: auto; border: 1px solid #e3dcee; border-radius: 8px; }
+.op-gs figure.op-gs-narrow img { max-width: 440px; }
+.op-gs figure.op-gs-bare img { border: 0; border-radius: 0; }
+.op-gs figcaption { font-size: .88em; color: #625a73; margin-top: .4em; }
+.op-gs ol.op-gs-steps { list-style: none; counter-reset: opstep; padding: 0; margin: 1em 0; }
+.op-gs ol.op-gs-steps li { counter-increment: opstep; position: relative; padding-left: 40px; margin-bottom: .7em; min-height: 28px; }
+.op-gs ol.op-gs-steps li::before { content: counter(opstep); position: absolute; left: 0; top: 0; width: 28px; height: 28px; border-radius: 50%; background: #ff4f2e; color: #fff; font-weight: 700; font-size: 15px; line-height: 28px; text-align: center; }
+.op-gs .op-gs-note { background: #fff4e8; border: 1px solid #f3c38f; border-radius: 8px; padding: .8em 1.1em; margin: 1.2em 0; }
+.op-gs .op-gs-note p { margin: .3em 0 0; }
+.op-gs .op-gs-soon { border: 2px dashed #e3dcee; border-radius: 10px; padding: 1em 1.2em; color: #625a73; }
+.op-gs code { font-size: .9em; background: #efe7fa; padding: 1px 5px; border-radius: 4px; }
+</style>
+<div class="op-gs">
+
+<h1>Your first steps with OnionPress</h1>
+
+<p class="op-gs-lede">OnionPress runs your website from your own Mac and publishes it as an onion service on Tor. This guide shows where to click to open your dashboard, write a post, see your site, and keep a backup.</p>
+
+<ul class="op-gs-toc">
+  <li><a href="#op-gs-setup">0 &middot; First launch</a></li>
+  <li><a href="#op-gs-icon">1 &middot; Find the icon</a></li>
+  <li><a href="#op-gs-menu">2 &middot; The menu</a></li>
+  <li><a href="#op-gs-dashboard">3 &middot; Your dashboard</a></li>
+  <li><a href="#op-gs-post">4 &middot; First post</a></li>
+  <li><a href="#op-gs-visit">5 &middot; Visit your site</a></li>
+  <li><a href="#op-gs-backup">6 &middot; Back up</a></li>
+</ul>
+
+<h2 id="op-gs-setup"><span class="op-gs-num">0</span>First launch and setup</h2>
+
+<div class="op-gs-soon">
+  <p><strong>Coming soon.</strong> This chapter will walk through installing OnionPress and the first-time setup, with screenshots. It will cover:</p>
+  <ul>
+    <li>Installing OnionPress and opening it for the first time</li>
+    <li>Choosing your username and password during setup, and saving them in a password manager</li>
+    <li>Installing Brave (or Tor Browser) so you can visit onion sites</li>
+    <li>What Tor is, and why the first connection can take a minute</li>
+  </ul>
+</div>
+
+<h2 id="op-gs-icon"><span class="op-gs-num">1</span>Find the OnionPress icon</h2>
+
+<p>Once OnionPress is running, a small purple onion sits in the menu bar at the top right of your screen, near the clock. Everything else in this guide starts from that icon.</p>
+
+<figure class="op-gs-bare">
+  <img src="/wp-content/uploads/2026/09/op-getting-started-ch1-menubar.png" width="1500" height="200" alt="The Mac menu bar, with the purple OnionPress onion icon circled">
+  <figcaption>The OnionPress icon in the Mac menu bar.</figcaption>
+</figure>
+
+<div class="op-gs-note">
+  <strong>Can&rsquo;t see it?</strong>
+  <p>If you have more than one screen, look at the menu bar on the screen you&rsquo;re using. On MacBooks with a notch, a crowded menu bar can hide icons behind the notch, so quit an app or two you don&rsquo;t need. If the onion isn&rsquo;t there at all, open OnionPress from your Applications folder.</p>
+</div>
+
+<h2 id="op-gs-menu"><span class="op-gs-num">2</span>The OnionPress menu</h2>
+
+<p>Click the onion to open the menu. You&rsquo;ll only need a few of its items day to day.</p>
+
+<figure class="op-gs-narrow">
+  <img src="/wp-content/uploads/2026/09/op-getting-started-ch2-menu.png" width="1000" height="1010" alt="The OnionPress menu with its main items marked 1 to 5">
+</figure>
+
+<ol class="op-gs-steps">
+  <li><strong>Status line.</strong> Shows your site&rsquo;s name and onion address, like <code>orbit@op2auss3&hellip;.onion</code>. While OnionPress is starting up it says <strong>Starting...</strong> instead.</li>
+  <li><strong>Open Local Site</strong> is the one to remember. It opens your site with you already signed in, so you can get to your dashboard (chapter 3).</li>
+  <li><strong>Copy Onion Address</strong> copies your site&rsquo;s address so you can share it.</li>
+  <li><strong>Open in Brave Browser</strong> opens your site over Tor, the way visitors see it (chapter 5). If you use Tor Browser, this item says <strong>Open in Tor Browser</strong>.</li>
+  <li><strong>Backup...</strong> saves a copy of your whole site (chapter 6).</li>
+</ol>
+
+<h2 id="op-gs-dashboard"><span class="op-gs-num">3</span>Get into your dashboard</h2>
+
+<p>Your site runs on WordPress, and the dashboard is where you write and manage it. To get there, click the onion and choose <strong>Open Local Site</strong>. Your browser opens your site, already signed in.</p>
+
+<figure>
+  <img src="/wp-content/uploads/2026/09/op-getting-started-ch3-dashboard.png" width="1600" height="917" alt="The WordPress dashboard with Posts, New and the site name marked 1 to 3">
+  <figcaption>The dashboard for the site &ldquo;Orbit&rsquo;s Universe&rdquo;.</figcaption>
+</figure>
+
+<ol class="op-gs-steps">
+  <li><strong>Posts</strong> lists everything you&rsquo;ve written.</li>
+  <li><strong>+ New</strong> starts a new post.</li>
+  <li>Your <strong>site name</strong> (here, <strong>Orbit&rsquo;s Universe</strong>) takes you to your site as visitors see it.</li>
+</ol>
+
+<h3>Seeing a login page instead?</h3>
+
+<p>If your browser shows a WordPress login page asking for a username and password, don&rsquo;t try to guess them. Go back to the onion and choose <strong>Open Local Site</strong> again.</p>
+
+<figure>
+  <img src="/wp-content/uploads/2026/09/op-getting-started-ch3-login.png" width="1600" height="827" alt="The WordPress login page, marked as the page you don't need">
+  <figcaption>The WordPress login page. You can skip it.</figcaption>
+</figure>
+
+<div class="op-gs-note">
+  <strong>Why there&rsquo;s no password to type</strong>
+  <p><strong>Open Local Site</strong> signs you in with a one-time link. Each link works once and expires after 2 minutes, so bookmarking it won&rsquo;t work. Once you&rsquo;re signed in, your browser usually stays signed in. You can still get signed out, for example after a restart, after clearing your browser data, or in a different browser. Whenever that happens, click <strong>Open Local Site</strong> again.</p>
+</div>
+
+<h2 id="op-gs-post"><span class="op-gs-num">4</span>Write and publish your first post</h2>
+
+<p>In the dashboard, click <strong>+ New</strong> at the top. The editor opens.</p>
+
+<figure>
+  <img src="/wp-content/uploads/2026/09/op-getting-started-ch4-editor.png" width="1600" height="827" alt="The WordPress editor with the title, the writing area and the Publish button marked 1 to 3">
+  <figcaption>A new, empty post in the WordPress editor.</figcaption>
+</figure>
+
+<ol class="op-gs-steps">
+  <li>Click <strong>Add title</strong> and type a title.</li>
+  <li>Click below the title and start writing. Press Return for a new paragraph. To add a picture or other content, type <code>/</code> and choose from the list.</li>
+  <li>Click <strong>Publish</strong>, then click <strong>Publish</strong> again to confirm. Your post is now live.</li>
+</ol>
+
+<p>To check how it looks, click your site name at the top left of the dashboard. Your newest post appears at the top of your home page.</p>
+
+<figure>
+  <img src="/wp-content/uploads/2026/09/op-getting-started-ch4-site.png" width="1600" height="827" alt="The site's home page, with the onion address and the signed-in greeting marked 1 and 2">
+  <figcaption>Your site&rsquo;s home page, with the dashboard bar at the top because you&rsquo;re signed in.</figcaption>
+</figure>
+
+<ol class="op-gs-steps">
+  <li>Your <strong>name and onion address</strong>. This is the address people use to reach your site.</li>
+  <li><strong>Howdy, orbit</strong> means you&rsquo;re signed in. Visitors don&rsquo;t see this dark bar.</li>
+</ol>
+
+<h2 id="op-gs-visit"><span class="op-gs-num">5</span>See your site the way visitors do</h2>
+
+<p><strong>Open Local Site</strong> shows your site straight from your Mac. To see it over Tor, the way visitors reach it, click the onion and choose <strong>Open in Brave Browser</strong> (or <strong>Open in Tor Browser</strong>).</p>
+
+<p>The first time, the page stays blank for a while. Tor is building a private route to your site through several computers around the world. 20 to 30 seconds is normal, and sometimes it takes longer.</p>
+
+<figure>
+  <img src="/wp-content/uploads/2026/09/op-getting-started-ch5-tor-loading.png" width="1600" height="982" alt="A Brave Tor window still loading the site">
+  <figcaption>Still loading after 20 seconds. The &times; next to the address means the page is loading.</figcaption>
+</figure>
+
+<figure>
+  <img src="/wp-content/uploads/2026/09/op-getting-started-ch5-tor-site.png" width="1600" height="982" alt="The site loaded over Tor, with the onion address and the Tor indicator marked 1 and 2">
+  <figcaption>The same site, loaded over Tor after about 30 seconds.</figcaption>
+</figure>
+
+<ol class="op-gs-steps">
+  <li>The <strong>.onion address</strong> in the address bar. Anyone with Tor can visit it.</li>
+  <li>The <strong>Tor</strong> label means this window connects through Tor.</li>
+</ol>
+
+<div class="op-gs-note">
+  <strong>Sharing your site</strong>
+  <p>Choose <strong>Copy Onion Address</strong> from the onion menu and paste it anywhere. Visitors need Tor Browser, or a Brave <strong>Private Window with Tor</strong>, to open .onion addresses.</p>
+</div>
+
+<h2 id="op-gs-backup"><span class="op-gs-num">6</span>Keep a backup</h2>
+
+<p>A backup saves your whole site in one file: posts, pictures, settings, and the keys to your onion address. With it, you can restore your site on another Mac, at the same address. Make one after anything you&rsquo;d hate to lose.</p>
+
+<p>Click the onion and choose <strong>Backup...</strong>.</p>
+
+<figure class="op-gs-narrow">
+  <img src="/wp-content/uploads/2026/09/op-getting-started-ch6-backup-dialog.png" width="720" height="760" alt="The Backup OnionPress window with the username, password and Backup button marked 1 to 3">
+</figure>
+
+<ol class="op-gs-steps">
+  <li><strong>Username</strong> is filled in for you.</li>
+  <li>Type your <strong>password</strong>. This is the one you chose during setup. It also locks the backup file, and you&rsquo;ll need it to restore.</li>
+  <li>Click <strong>Backup</strong>, choose where to save, and click <strong>Save</strong>. When it&rsquo;s done, OnionPress tells you the file name and size.</li>
+</ol>
+
+<div class="op-gs-note">
+  <strong>Forgot your password?</strong>
+  <p>Open your dashboard with <strong>Open Local Site</strong> (no password needed), then go to <strong>Users &rarr; Profile</strong> and click <strong>Set New Password</strong>. Save the new one in a password manager. Backups you made earlier still need the old password.</p>
+</div>
+
+<p>Backups go in the <code>OnionPress/backups</code> folder in your home folder, unless you choose somewhere else.</p>
+
+<figure>
+  <img src="/wp-content/uploads/2026/09/op-getting-started-ch6-finder.png" width="1400" height="604" alt="The backups folder in Finder, showing one backup file">
+  <figcaption>A finished backup: one ZIP file, named after your site and the date.</figcaption>
+</figure>
+
+<p>For extra safety, copy the backup somewhere other than your Mac, like an external drive.</p>
+
+<p style="font-size:.88em;color:#625a73;margin-top:2.5em;">Screenshots from OnionPress 2.4.110 on macOS, taken September 23, 2026.</p>
+
+</div>
+<!-- /wp:html -->
